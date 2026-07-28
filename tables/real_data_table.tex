@@ -1,0 +1,23 @@
+\begin{table}[t]
+\centering
+\caption{Real-data empirical coverage and interval width over repeated random splits.}
+\label{tab:real-data-new}
+\begin{tabular}{llrrrrrr}
+\toprule
+Dataset & Method & Coverage & PAC success & Mean width & Q90 width & Lower miss & Upper miss \\
+\midrule
+CPS 2012 hourly wage & Parametric-TI & 0.936 & 1.000 & 39.77 & 59.66 & 0.034 & 0.030 \\
+CPS 2012 hourly wage & SR-TI & 0.915 & 1.000 & 37.18 & 63.17 & 0.044 & 0.042 \\
+CPS 2012 hourly wage & ASR-TI & 0.915 & 1.000 & 37.67 & 64.13 & 0.045 & 0.040 \\
+CPS 2012 hourly wage & CQR-TI & 0.914 & 1.000 & 36.32 & 60.06 & 0.044 & 0.042 \\
+MEPS 2016 total medical expenditure & Parametric-TI & 0.884 & 0.050 & 113044.33 & 313209.94 & 0.096 & 0.020 \\
+MEPS 2016 total medical expenditure & SR-TI & 0.920 & 1.000 & 80803.93 & 179317.32 & 0.065 & 0.015 \\
+MEPS 2016 total medical expenditure & ASR-TI & 0.921 & 1.000 & 56141.95 & 125895.36 & 0.052 & 0.027 \\
+MEPS 2016 total medical expenditure & CQR-TI & 0.920 & 1.000 & 13663.75 & 29986.05 & 0.023 & 0.057 \\
+Superconductivity critical temperature & Parametric-TI & 0.907 & 0.800 & 39.41 & 46.58 & 0.054 & 0.039 \\
+Superconductivity critical temperature & SR-TI & 0.917 & 1.000 & 42.61 & 78.61 & 0.044 & 0.039 \\
+Superconductivity critical temperature & ASR-TI & 0.917 & 1.000 & 42.57 & 78.58 & 0.044 & 0.039 \\
+Superconductivity critical temperature & CQR-TI & 0.917 & 1.000 & 45.98 & 79.98 & 0.037 & 0.046 \\
+\bottomrule
+\end{tabular}
+\end{table}

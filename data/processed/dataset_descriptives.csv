@@ -1,0 +1,5 @@
+dataset,label,n,p,response_min,response_median,response_mean,response_p90,response_p99,response_max,zero_fraction,transform,source
+cps_wage,CPS 2012 hourly wage,29217,100,0.00057,16.03125,20.472136561483,35.625,85.5,391.87464375,0,log,R package hdm::cps2012; DCP replication specification
+superconductivity,Superconductivity critical temperature,21263,81,0.00021,20,34.4212191353543,89,120.2,185,0,identity,UCI Superconductivity Data
+meps_expenditure,MEPS 2016 total medical expenditure,15656,138,0,676.5,4088.32901124171,9521.5,54476.8000000001,483812,0.182485947879407,log1p,"AHRQ MEPS HC-192, Panel 21; CQR preprocessing cohort"
+meps_utilization,MEPS 2016 health-care utilization (sensitivity),15656,138,0,2,8.0005748594787,16,106,532,0.272994379151763,log1p,"AHRQ MEPS HC-192, Panel 21; CQR preprocessing cohort"
