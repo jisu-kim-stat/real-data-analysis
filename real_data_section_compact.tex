@@ -1,0 +1,107 @@
+% Compact drop-in replacement preserving the structure of the original section.
+% Numerical note: see real_data_section_revised.tex before final submission.
+
+\section{Real Data Applications}
+\label{sec:real-data}
+
+We evaluate the proposed methods on three real regression datasets representing
+distinct distributional regimes: heterogeneous wages, a continuous
+materials-science outcome, and semicontinuous medical expenditure. For each
+dataset, we use 20 repeated random splits, allocating approximately one third of
+the observations to training, calibration, and held-out evaluation. The mean,
+scale, and conditional-quantile functions are estimated using gradient boosting
+with common tuning parameters. We set \(C=0.90\) and \(1-\alpha=0.95\).
+
+Since the conditional response distributions are unknown, we report held-out
+empirical content and interval width over repeated random splits. These
+quantities are empirical diagnostics and should not be interpreted as direct
+estimates of the theoretical conditional PAC guarantees. For CPS and MEPS, the
+analysis targets the unweighted public-use sample distribution rather than a
+survey-weighted population distribution.
+
+\subsection{CPS Hourly Wage}
+
+The 2012 Current Population Survey sample contains \(29{,}217\) observations,
+with hourly wage as the response. The predictors describe sex, marital status,
+education, region, and labor-market experience. We include all two-way
+interactions among 15 base covariates, yielding 100 nonconstant predictors. The
+methods are fitted to log hourly wage, and interval endpoints are transformed
+back to dollars per hour.
+
+All four methods attain empirical content above \(C=0.90\) in every split.
+SR--TI, ASR--TI, and CQR--TI have average contents \(0.915\), \(0.915\), and
+\(0.914\), respectively, compared with \(0.936\) for the Parametric TI.
+CQR--TI has the smallest mean width, \(36.32\), while the Parametric TI has the
+smallest 90th-percentile width, \(59.66\).
+
+\subsection{Superconducting Critical Temperature}
+
+The superconductivity dataset contains \(21{,}263\) materials represented by 81
+physicochemical features. The response is critical temperature in Kelvin,
+analyzed on its original scale. The three PAC-calibrated methods have average
+empirical content \(0.917\) and attain the target in every split. The Parametric
+TI has average content \(0.907\), although its held-out content falls below the
+target in 4 of the 20 splits. The Parametric TI has the smallest average width,
+while ASR--TI is the narrowest of the PAC-calibrated methods.
+
+\subsection{MEPS Medical Expenditure}
+
+The third application uses Panel 21 of the 2016 Medical Expenditure Panel Survey.
+After preprocessing, the analysis contains \(15{,}656\) individuals and 138
+predictors. The response is annual total medical expenditure. Expenditure is
+zero for \(18.2\%\) of the observations and is strongly right-skewed, so the
+methods are fitted to \(\log(1+Y)\) and transformed back to dollars.
+
+The Parametric TI undercovers, with average content \(0.884\). SR--TI, ASR--TI,
+and CQR--TI attain average contents \(0.920\), \(0.921\), and \(0.920\),
+respectively, and reach the target in every split.
+ASR--TI reduces the mean width by approximately \(30.5\%\) relative to SR--TI,
+while CQR--TI is the shortest method. Because the response has a point mass at
+zero, this application is a stress test of the finite-sample marginal PAC layer
+rather than an illustration of the continuous location--scale conditions used
+for the conditional SR--TI result.
+
+\begin{table}[H]
+\centering
+\caption{Real-data empirical content and interval width over 20 repeated random
+splits.}
+\label{tab:real-data-summary}
+\small
+\begin{tabular}{llccc}
+\toprule
+Dataset & Method & Content & Mean width & Q90 width \\
+\midrule
+CPS & SR--TI          & 0.915 & 37.18 & 63.17 \\
+CPS & ASR--TI         & 0.915 & 37.68 & 64.13 \\
+CPS & CQR--TI         & 0.914 & \textbf{36.32} & 60.06 \\
+CPS & Parametric TI   & 0.936 & 39.77 & \textbf{59.66} \\
+\midrule
+Supercond. & SR--TI        & 0.917 & 42.61 & 78.61 \\
+Supercond. & ASR--TI       & 0.917 & 42.57 & 78.58 \\
+Supercond. & CQR--TI       & 0.917 & 45.98 & 79.98 \\
+Supercond. & Parametric TI & 0.907 & \textbf{39.41} & \textbf{46.58} \\
+\midrule
+MEPS & SR--TI        & 0.920 & 80{,}804 & 179{,}317 \\
+MEPS & ASR--TI       & 0.921 & 56{,}142 & 125{,}895 \\
+MEPS & CQR--TI       & 0.920 & \textbf{13{,}664} & \textbf{29{,}986} \\
+MEPS & Parametric TI & 0.884 & 113{,}044 & 313{,}210 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.25em}
+\begin{flushleft}
+\footnotesize
+Widths are reported on the original response scale: dollars per hour for CPS,
+Kelvin for superconductivity, and dollars for MEPS. Bold entries indicate the
+smallest width among methods whose average empirical content exceeds the target
+level \(C=0.90\), within each dataset.
+\end{flushleft}
+\end{table}
+
+\paragraph{Takeaway.}
+The three applications illustrate that the proposed methods are validity tools
+rather than uniformly shortest intervals. The PAC-calibrated methods attain the
+target in every split across all three datasets, whereas the parametric
+benchmark is unstable for superconductivity and fails sharply for MEPS.
+Efficiency remains score- and data-dependent: CQR--TI is most efficient for CPS
+and MEPS, while the Parametric TI is shortest on superconductivity.

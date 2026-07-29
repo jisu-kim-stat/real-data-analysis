@@ -30,10 +30,17 @@ source code.
 - `R/00_download_data.R`: downloads/bootstrap public data.
 - `R/01_prepare_data.R`: constructs model matrices and transformed responses.
 - `R/tolerance_methods.R`: implements the four intervals and diagnostics.
+- `R/guo2024_pointwise_ti.R`: exact two-sided pointwise Guo--Young
+  nonparametric regression TI using equations (11) and (14) with a
+  GCV-selected one-dimensional cubic smoothing spline.
 - `R/02_run_experiments.R`: runs repeated train/calibration/evaluation splits.
 - `R/03_summarize_results.R`: produces tables, plots, and LaTeX.
 - `tables/`: manuscript-ready numerical summaries.
 - `figures/`: coverage, width, conditional diagnostic, and score-pivotality plots.
+- `real_data_section_compact.tex`: drop-in replacement matching the original
+  section's concise dataset--table--takeaway structure.
+- `real_data_section_revised.tex`: recommended expanded section with
+  split-success and conditional score-pivotality diagnostics.
 - `report_ko.md`: Korean interpretation and manuscript recommendations.
 
 ## Re-run

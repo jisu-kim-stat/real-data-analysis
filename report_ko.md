@@ -1,18 +1,15 @@
 # CPS·Superconductivity·MEPS 1차 실제 데이터 분석
 
-## 1. 한 줄 결론
+## 1. 결론 세줄요약
+- **CPS**: 모든 방법이 marginal target을 만족하지만, CQR-TI가 가장 짧고 scale strata별 coverage도 가장 안정적.
+- **Superconductivity**: SR/ASR score의 full-CDF pivotality가 CQR보다 훨씬 좋고, SR/ASR 구간도 CQR보다 짧음.
+- **MEPS 의료비**: Parametric-TI는 실패. SR의 비대칭 보정과 CQR의 tail adaptation이 효율적으로 보임.
 
-세 데이터는 함께 쓰는 것이 좋다. 서로 같은 결과를 반복하는 것이 아니라 논문의 서로 다른 주장을 보여준다.
-
-- **CPS**: 모든 방법이 marginal target을 만족하지만, CQR-TI가 가장 짧고 scale strata별 coverage도 가장 안정적이다.
-- **Superconductivity**: SR/ASR score의 full-CDF pivotality가 CQR보다 훨씬 좋고, SR/ASR 구간도 CQR보다 짧다.
-- **MEPS 의료비**: Parametric-TI가 명확하게 실패하고, ASR의 비대칭 보정과 CQR의 tail adaptation이 큰 효율 이득을 준다.
-
-가장 중요한 공통 결과는 **SR-TI·ASR-TI·CQR-TI가 세 데이터의 20개 split 모두에서 held-out coverage 0.90 이상을 기록했다**는 것이다. 반면 Parametric-TI의 empirical split-success는 Superconductivity에서 0.80, MEPS에서 0.05였다.
+**SR-TI·ASR-TI·CQR-TI가 세 데이터의 20개 split 모두에서 held-out coverage 0.90 이상을 기록**한 반면, Parametric-TI의 empirical split-success는 Superconductivity에서 0.80, MEPS에서 0.05였다.
 
 ## 2. 데이터와 실험 설정
 
-| 데이터 | \(n\) | \(p\) | 반응·변환 | 주요 특징 |
+| 데이터 | \(n\) | \(p\) | 반응변수 변환| 주요 특징 |
 |---|---:|---:|---|---|
 | CPS 2012 | 29,217 | 100 | hourly wage, log scale 학습 후 원척도 복원 | 연속형, 오른쪽 왜도, 교육·경력·성별 이질성 |
 | Superconductivity | 21,263 | 81 | critical temperature, 원척도 | 연속형, 비선형, 강한 scale heterogeneity |
@@ -126,36 +123,12 @@ CQR 공개 코드가 실제로 만든 response는 총 의료비가 아니라 외
 
 의료이용 횟수에서는 Parametric-TI도 marginal target을 넘으므로, 본문에서 방법 차이를 보여주는 데는 총 의료비가 더 낫다. 이용횟수는 기존 CQR 문헌과의 연결을 보여주는 appendix sensitivity가 적절하다.
 
-## 7. 원고 구성 권고
 
-본문 Real Data Applications를 다음처럼 구성하는 것이 좋다.
+## 8. 한계점
 
-1. **Data and protocol**
-   - CPS, Superconductivity, MEPS 설명
-   - 공통 split, learner, \(C\), \(\alpha\), transform 명시
-2. **Marginal PAC and efficiency**
-   - `tables/real_data_table.tex`
-   - `figures/coverage_by_method.png`
-   - `figures/width_by_method.png`
-3. **Conditional diagnostic and pivotality**
-   - `figures/coverage_by_predicted_scale.png`
-   - `figures/score_pivotality.png`
-4. **Appendix**
-   - MEPS utilization sensitivity
-   - 기존 Happy photo-z sanity check
-
-TSA는 현재 i.i.d. 이론과 random split이 충돌하므로 삭제하거나, chronological/block split을 사용하는 별도 time-series appendix로 보내는 것이 안전하다.
-
-## 8. 반드시 써야 할 한계
-
-- 실제 데이터에서는 \(Y\mid X=x\)의 참 분포를 모르므로 conditional PAC를 직접 검증한 것이 아니다.
+- 실제 데이터에서는 \(Y\mid X=x\)의 참 분포를 모르므로 conditional PAC를 직접 검증한 것이 아님. 그러나 이는 real data simulation에서는 당연한 문제.
 - `Empirical success`는 20 repeated splits와 유한 evaluation sample에 근거한 진단이다.
 - MEPS 분석은 survey weights를 쓰지 않았으므로 미국 인구가 아니라 관측 sample distribution을 target으로 한다.
 - MEPS의 zero atom은 SR/ASR conditional theorem의 연속성 조건과 다르다.
 - Superconductivity에는 같은 material family의 dependence가 남아 있을 수 있다.
 - 현재 GBM hyperparameter는 공통 고정값이다. 최종 투고 전에는 learner sensitivity 또는 nested tuning을 한 번 확인하는 것이 좋다.
-- Parametric-TI는 PDF에 있는 정의를 재현 가능한 형태로 구현한 prototype benchmark다. 원 원고 코드가 있다면 정확히 맞춰 다시 계산해야 한다.
-
-## 9. 현재 결과로 가능한 핵심 문장
-
-> Across all three datasets, the PAC-calibrated procedures attained held-out content above the target in every one of 20 random splits, whereas the normal-theory benchmark failed in 20% of the superconductivity splits and 95% of the MEPS expenditure splits. The score diagnostics reveal a separate phenomenon: SR-TI and ASR-TI produced substantially more covariate-stable score distributions than CQR-TI, especially for superconductivity, even when CQR-TI exhibited stable coverage near the target level. This distinction empirically supports the paper's separation between marginal PAC calibration, full score pivotality, and target-level conditional behavior.

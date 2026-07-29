@@ -138,6 +138,10 @@ ggsave(
   file.path(figure_dir, "coverage_by_method.png"),
   p_coverage, width = 12.5, height = 4.3, dpi = 220
 )
+ggsave(
+  file.path(figure_dir, "coverage_by_method.pdf"),
+  p_coverage, width = 12.5, height = 4.3, device = "pdf"
+)
 
 p_width <- ggplot(
   primary_summary,
@@ -155,6 +159,10 @@ p_width <- ggplot(
 ggsave(
   file.path(figure_dir, "width_by_method.png"),
   p_width, width = 12.5, height = 4.3, dpi = 220
+)
+ggsave(
+  file.path(figure_dir, "width_by_method.pdf"),
+  p_width, width = 12.5, height = 4.3, device = "pdf"
 )
 
 conditional_plot_data <- merge(conditional_table, label_map, by = "dataset")
@@ -183,6 +191,10 @@ ggsave(
   file.path(figure_dir, "coverage_by_predicted_scale.png"),
   p_conditional, width = 12.5, height = 4.5, dpi = 220
 )
+ggsave(
+  file.path(figure_dir, "coverage_by_predicted_scale.pdf"),
+  p_conditional, width = 12.5, height = 4.5, device = "pdf"
+)
 
 pivotality_plot_data <- merge(pivotality_table, label_map, by = "dataset")
 pivotality_plot_data <- pivotality_plot_data[dataset %in% primary_order]
@@ -208,6 +220,10 @@ p_pivotality <- ggplot(
 ggsave(
   file.path(figure_dir, "score_pivotality.png"),
   p_pivotality, width = 11.5, height = 4.1, dpi = 220
+)
+ggsave(
+  file.path(figure_dir, "score_pivotality.pdf"),
+  p_pivotality, width = 11.5, height = 4.1, device = "pdf"
 )
 
 sensitivity <- summary_table[dataset == "meps_utilization"]
